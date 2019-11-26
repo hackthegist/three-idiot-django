@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .serializers import GenreSerializer, MovieSerializer, ReviewSerializer, MovieDetailSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from .models import Genre, Movie, Review
 
 # Create your views here.
 

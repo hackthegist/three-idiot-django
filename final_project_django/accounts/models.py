@@ -4,6 +4,7 @@ from django.conf import settings
 
 # Create your models here.
 class User(AbstractUser):
+    email = models.CharField(max_length=150)
     is_staff = models.BooleanField(default=False)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followings")
 

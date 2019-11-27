@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -14,6 +14,12 @@ def admin_accounts(request):
     accounts = User.objects.all()
     serializers = UserSerializer(accounts, many=True)
     return Response(serializers.data)
+
+@api_view(['GET'])
+def detail(request, user_pk):
+    account = get_object_or_404(User, pk=user_pk)
+    serializer = UserSerializer(account)
+    return Response(serializer.data)
 
 # @api_view(['POST'])
 # def signup(request):

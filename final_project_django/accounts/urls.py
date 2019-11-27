@@ -7,6 +7,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('', UserAPIView.as_view(), name='user'),
     path('admin/', views.admin_accounts, name='admin_accounts'),
+    path('<int:user_pk>/', views.detail, name='detail'),
     # path('signup/', views.signup, name='signup'),
     # path('signout/', views.signout, name='signout'),
     # path('login/', views.login, name='login'),

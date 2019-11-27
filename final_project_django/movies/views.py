@@ -29,10 +29,17 @@ def detail(request, movie_pk):
 
 @api_view(['POST'])
 def create_review(request, movie_pk):
+    # review = Review(request.data)
+    # review.score = 1
+    # review.user = request.user
+    # review.movie_id = movie_pk
+    # review.save()
+    # return Response({message: "리뷰가 생성되었습니다."})
     serializer = ReviewSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user, movie_id=movie_pk)
-    return Response(serializer.data)
+    # return Response(serializer.data)
+    return Response(status=200)
 
 @api_view(['GET'])
 def delete_review(request, movie_pk, review_pk):
@@ -40,4 +47,5 @@ def delete_review(request, movie_pk, review_pk):
     review.delete()
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieDetailSerializer(movie)
-    return Response(serializer.data)
+    # return Response(serializer.data)
+    return Response(status=200)

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
 "http://127.0.0.1:8080"

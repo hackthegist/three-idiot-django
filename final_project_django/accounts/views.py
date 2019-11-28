@@ -50,6 +50,27 @@ def detail(request, user_pk):
 # def logout(request):
 #     pass
 
+@api_view(['POST'])
+def create(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(status=200)
+
+@api_view(['GET'])
+def delete(request, user_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    user.delete()
+    return Response(status=200)
+
+@api_view(['POST'])
+def update(request, user_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    serializer = UserSerializer(user)
+    serializer = serializer(data=request.data)
+    serializer.save()
+    return Response(status=200)
+
 class UserAPIView(APIView):
 
     def get(self, request):

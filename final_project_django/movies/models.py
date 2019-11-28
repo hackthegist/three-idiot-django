@@ -25,6 +25,8 @@ class Movie(models.Model):
     image = models.CharField(max_length=300)
     userRating = models.CharField(max_length=45)
     audiAcc = models.CharField(max_length=45)
+    thumbsNm = models.CharField(max_length=500)
+    thumbsImage = models.TextField()
 
     def __str__(self):
         return self.title

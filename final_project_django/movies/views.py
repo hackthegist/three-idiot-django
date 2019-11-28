@@ -101,6 +101,13 @@ def create_review(request, movie_pk):
     # return Response(serializer.data)
     return Response(status=200)
 
+@api_view(['GET'])
+def reviews(request, movie_pk):
+    reviews = Review.objects.filter(movie_id=movie_pk)
+    serializer = ReviewSerializer(reviews, many=True)
+    # return Response(serializer.data)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def delete_review(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)

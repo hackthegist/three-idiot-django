@@ -63,17 +63,17 @@ def recommend(request):
                     if movie_actor == movie_data_actor:
                         temp_score += 1
                         break
-        if movie.userRating > 8:
+        if float(movie.userRating) > 8:
             temp_score += 1
-        if movie.audiAcc > 50000000:
+        if int(movie.audiAcc) > 50000000:
             temp_score += 1
         movie_scores.append(temp_score)
     pivot_score = (max(movie_scores) + min(movie_scores)) // 2
-    for idx in range(1, 199):
+    for idx in range(0, len(movie_scores)):
         if pivot_score < movie_scores[idx]:
-            movie_ids.append(idx)
+            movie_ids.append(idx+1)
     while len(recommended_movies) < 5:
-        num = random.randrange(1, 199)
+        num = random.randrange(1, len(movie_scores)+1)
         if num in movie_ids:
             if num not in recommended_movies:
                 recommended_movies.append(num)
@@ -101,7 +101,7 @@ def create_review(request, movie_pk):
     # return Response(serializer.data)
     return Response(status=200)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def delete_review(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
@@ -125,7 +125,7 @@ def create(request):
         serializer.save()
     return Response(status=200)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def delete(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     movie.delete()

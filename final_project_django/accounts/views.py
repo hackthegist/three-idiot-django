@@ -57,7 +57,7 @@ def create(request):
         serializer.save()
     return Response(status=200)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def delete(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
     user.delete()

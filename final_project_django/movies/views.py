@@ -16,9 +16,16 @@ def admin_movies(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
 def research(request):
     movies = Movie.objects.all()
-    serializer = MovieSerializer(movies, many=True)
+    research_movies = []
+    while len(research_movies) < 15:
+        num = random.randrange(1, 1001)
+        if num not in research_movies:
+            research_movies.append(num)
+    queryset = Movie.objects.filter(pk__in=research_movies)
+    serializer = MovieSerializer(queryset, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])

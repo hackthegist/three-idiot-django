@@ -14,4 +14,7 @@ urlpatterns = [
     # path('logout/', views.logout, name='logout'),
     path('rest-auth/', include("rest_auth.urls")),
     path('signup/', include("rest_auth.registration.urls")),
+    path('create/', views.create, name='create'),
+    path('<int:user_pk>/delete/', views.delete, name='delete'),
+    path('<int:user_pk>/update/', views.update, name='update'),
 ]

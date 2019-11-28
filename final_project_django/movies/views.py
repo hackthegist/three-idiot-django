@@ -20,8 +20,8 @@ def admin_movies(request):
 def research(request):
     movies = Movie.objects.all()
     research_movies = []
-    while len(research_movies) < 3:
-        num = random.randrange(1, 15)
+    while len(research_movies) < 15:
+        num = random.randrange(1, 199)
         if num not in research_movies:
             research_movies.append(num)
     queryset = Movie.objects.filter(pk__in=research_movies)
@@ -69,11 +69,11 @@ def recommend(request):
             temp_score += 1
         movie_scores.append(temp_score)
     pivot_score = (max(movie_scores) + min(movie_scores)) // 2
-    for idx in range(1, 15):
+    for idx in range(1, 199):
         if pivot_score < movie_scores[idx]:
-            movie_ids.append(idx+1)
-    while len(recommended_movies) < 3:
-        num = random.randrange(1, 15)
+            movie_ids.append(idx)
+    while len(recommended_movies) < 5:
+        num = random.randrange(1, 199)
         if num in movie_ids:
             if num not in recommended_movies:
                 recommended_movies.append(num)

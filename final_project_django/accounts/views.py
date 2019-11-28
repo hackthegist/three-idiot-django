@@ -66,9 +66,9 @@ def delete(request, user_pk):
 @api_view(['POST'])
 def update(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
-    serializer = UserSerializer(user)
-    serializer = serializer(data=request.data)
-    serializer.save()
+    serializer = UserSerializer(data=request.data, instance=user)
+    if serializer.is_valid():
+        serializer.save()
     return Response(status=200)
 
 class UserAPIView(APIView):

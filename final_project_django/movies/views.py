@@ -113,9 +113,9 @@ def delete_review(request, movie_pk, review_pk):
 @api_view(['POST'])
 def update_review(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    serializer = ReviewSerializer(review)
-    serializer = serializer(data=request.POST)
-    serializer.save()
+    serializer = ReviewSerializer(data=request.data, instance=review)
+    if serializer.is_valid():
+        serializer.save()
     return Response(status=200)
 
 @api_view(['POST'])
@@ -134,7 +134,7 @@ def delete(request, movie_pk):
 @api_view(['POST'])
 def update(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = MovieSerializer(movie)
-    serializer = serializer(data=request.data)
-    serializer.save()
+    serializer = MovieSerializer(data=request.data, instance=movie)
+    if serializer.is_valid():
+        serializer.save()
     return Response(status=200)

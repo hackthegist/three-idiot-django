@@ -6,7 +6,7 @@ from django.conf import settings
 class User(AbstractUser):
     email = models.CharField(max_length=150)
     is_staff = models.BooleanField(default=False)
-    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followings")
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="followings", blank=True)
 
     class Meta:
         ordering = ['-pk',]

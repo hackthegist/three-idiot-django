@@ -11,13 +11,20 @@ class Genre(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=150)
     summary = models.TextField()
-    director = models.CharField(max_length=45)
-    genre = models.ManyToManyField(Genre, related_name="movies", blank=True) # FK : 다른 모델의 pk를 가져온 것 : ex> 학생 1반 2반 등..
+    directorNm = models.CharField(max_length=45)
+    # genresNm = models.ManyToManyField(Genre, related_name="movies", blank=True)
+    genresNm = models.CharField(max_length=150)
     prdtYear = models.IntegerField()
+    openDt = models.IntegerField()
     showTm = models.IntegerField()
     nationNm = models.CharField(max_length=45)
-    actors = models.CharField(max_length=150)
+    actorsNm = models.CharField(max_length=150)
     watchGradeNm = models.CharField(max_length=100)
+    companyNmDict = models.CharField(max_length=100)
+    link = models.CharField(max_length=300)
+    image = models.CharField(max_length=300)
+    userRating = models.CharField(max_length=45)
+    audiAcc = models.CharField(max_length=45)
 
     def __str__(self):
         return self.title

@@ -20,8 +20,8 @@ def admin_movies(request):
 def research(request):
     movies = Movie.objects.all()
     research_movies = []
-    while len(research_movies) < 15:
-        num = random.randrange(1, 1001)
+    while len(research_movies) < 3:
+        num = random.randrange(1, 15)
         if num not in research_movies:
             research_movies.append(num)
     queryset = Movie.objects.filter(pk__in=research_movies)
@@ -37,9 +37,9 @@ def recommend(request):
     for movie_data in request.data:
         for movie in movies:
             temp_score = 0
-            if movie.director == movie_data.director:
+            if movie.directorNm == movie_data.directorNm:
                 temp_score += 1
-            if movie.genre == movie_data.genre:
+            if movie.genresNm == movie_data.genresNm:
                 temp_score += 1
             if movie_data.showTm-30 <= movie.showTm <= movie_data.showTm+30:
                 temp_score += 1
@@ -50,6 +50,8 @@ def recommend(request):
                 if movie_data.nationNm != "한국":
                     temp_score += 1
             if movie.watchGradeNm == movie_data.watchGradeNm:
+
+                
                 temp_score += 1
             for actor in movie.actors:
                 if actor in movie_data.actors:

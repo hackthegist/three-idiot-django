@@ -34,13 +34,19 @@ def recommend(request):
     movie_scores = []
     movie_ids = []
     recommended_movies = []
-    for movie_data in request.data:
-        for movie in movies:
-            temp_score = 0
+    for movie in movies:
+        temp_score = 0
+        genre_list = movie.genresNm.split('|')
+        actor_list = movie.actorsNm.split('|')
+        for movie_data in request.data:
             if movie.directorNm == movie_data.directorNm:
                 temp_score += 1
-            if movie.genresNm == movie_data.genresNm:
-                temp_score += 1
+            movie_data_genre_list = movie_data.genresNm.split('|')
+            for movie_genre in genre_list:
+                for movie_data_genre in movie_data_genre_list:
+                    if movie_genre == movie_data_genre:
+                        temp_score += 1
+                        break
             if movie_data.showTm-30 <= movie.showTm <= movie_data.showTm+30:
                 temp_score += 1
             if movie.nationNm == "한국":
@@ -50,24 +56,26 @@ def recommend(request):
                 if movie_data.nationNm != "한국":
                     temp_score += 1
             if movie.watchGradeNm == movie_data.watchGradeNm:
-
-                
                 temp_score += 1
-            for actor in movie.actors:
-                if actor in movie_data.actors:
-                    temp_score += 1
-                    break
-            movie_scores.append(temp_score)
+            movie_data_actor_list = movie_data.actorsNm.split('|')
+            for movie_actor in actor_list:
+                for movie_data_actor in movie_data_actor_list:
+                    if movie_actor == movie_data_actor:
+                        temp_score += 1
+                        break
+        if movie.userRating > 8:
+            temp_score += 1
+        if movie.audiAcc > 50000000:
+            temp_score += 1
+        movie_scores.append(temp_score)
     pivot_score = (max(movie_scores) + min(movie_scores)) // 2
-    for idx in range(1, 1001):
+    for idx in range(1, 15):
         if pivot_score < movie_scores[idx]:
             movie_ids.append(idx+1)
-    checked = [False for i in range(1000)]
-    while len(recommended_movies) < 5:
-        num = random.randrange(1, 1001)
+    while len(recommended_movies) < 3:
+        num = random.randrange(1, 15)
         if num in movie_ids:
-            if cheched[num-1] == False:
-                checked[num-1] = True
+            if num not in recommended_movies:
                 recommended_movies.append(num)
     queryset = Movie.objects.filter(pk__in=recommended_movies)
     serializer = MovieSerializer(queryset, many=True)

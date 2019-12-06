@@ -29,6 +29,21 @@ def research(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+def research(request):
+    pk_group1 = [1, 2, 5, 21, 23]
+    pk_group2 = [3, 6, 10, 14, 20]
+    pk_group3 = [4, 7, 9, 13, 18, 22, 25]
+    pk_group4 = [8, 16, 19]
+    pk_group5 = [11, 12, 24, 28]
+    pk_group6 = [15, 17, 26, 27]
+    movie_group1 = Movie.objects.filter(pk__in=pk_group1)
+    movie_group1 = Movie.objects.filter(pk__in=pk_group2)
+    movie_group1 = Movie.objects.filter(pk__in=pk_group3)
+    movie_group1 = Movie.objects.filter(pk__in=pk_group4)
+    movie_group1 = Movie.objects.filter(pk__in=pk_group5)
+    movie_group1 = Movie.objects.filter(pk__in=pk_group6)
+
+@api_view(['POST'])
 def recommend(request):
     movies = Movie.objects.all()
     movie_scores = []

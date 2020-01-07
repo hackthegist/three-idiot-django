@@ -16,20 +16,21 @@ def admin_movies(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+# @api_view(['GET'])
+# def research(request):
+#     movies = Movie.objects.all()
+#     research_movies = []
+#     while len(research_movies) < 15:
+#         num = random.randrange(1, 199)
+#         if num not in research_movies:
+#             research_movies.append(num)
+#     queryset = Movie.objects.filter(pk__in=research_movies)
+#     serializer = MovieSerializer(queryset, many=True)
+#     return Response(serializer.data)]
+
 @api_view(['GET'])
 def research(request):
-    movies = Movie.objects.all()
     research_movies = []
-    while len(research_movies) < 15:
-        num = random.randrange(1, 199)
-        if num not in research_movies:
-            research_movies.append(num)
-    queryset = Movie.objects.filter(pk__in=research_movies)
-    serializer = MovieSerializer(queryset, many=True)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def research(request):
     pk_group1 = [1, 2, 5, 21, 23]
     pk_group2 = [3, 6, 10, 14, 20]
     pk_group3 = [4, 7, 9, 13, 18, 22, 25]
@@ -37,11 +38,49 @@ def research(request):
     pk_group5 = [11, 12, 24, 28]
     pk_group6 = [15, 17, 26, 27]
     movie_group1 = Movie.objects.filter(pk__in=pk_group1)
-    movie_group1 = Movie.objects.filter(pk__in=pk_group2)
-    movie_group1 = Movie.objects.filter(pk__in=pk_group3)
-    movie_group1 = Movie.objects.filter(pk__in=pk_group4)
-    movie_group1 = Movie.objects.filter(pk__in=pk_group5)
-    movie_group1 = Movie.objects.filter(pk__in=pk_group6)
+    movie_group2 = Movie.objects.filter(pk__in=pk_group2)
+    movie_group3 = Movie.objects.filter(pk__in=pk_group3)
+    movie_group4 = Movie.objects.filter(pk__in=pk_group4)
+    movie_group5 = Movie.objects.filter(pk__in=pk_group5)
+    movie_group6 = Movie.objects.filter(pk__in=pk_group6)
+    
+    movie_group = [0, movie_group1, movie_group2, movie_group3, movie_group4, movie_group5, movie_group6]
+    ordering = [1, 3, 5, 1, 4, 6, 2, 3, 6, 2, 5, 4]
+    for i in ordering:
+        random_num = random.randrange(0, len(movie_group[i]))
+        research_movies.append(movie_group[i][random_num].pk)
+
+    movie_group1 = Movie.objects.filter(nationNm="한국")
+    movie_group2 = Movie.objects.exclude(nationNm="한국")
+    movie_group = [0, movie_group1, movie_group2]
+    ordering = [1, 2, 1, 2]
+    for i in ordering:
+        random_num = random.randrange(0, len(movie_group[i]))
+        research_movies.append(movie_group[i][random_num].pk)
+
+    movie_group1 = Movie.objects.filter(watchGradeNm="전체관람가")
+    movie_group2 = Movie.objects.filter(watchGradeNm="12세관람가")
+    movie_group3 = Movie.objects.filter(watchGradeNm="15세관람가")
+    movie_group4 = Movie.objects.filter(watchGradeNm="18세관람가")
+    movie_group = [0, movie_group1, movie_group2, movie_group3, movie_group4]
+    ordering = [1, 4, 2, 3]
+    for i in ordering:
+        random_num = random.randrange(0, len(movie_group[i]))
+        research_movies.append(movie_group[i][random_num].pk)
+    
+    movie_group1 = Movie.objects.filter(showTm__lt = 90)
+    movie_group2 = Movie.objects.filter(showTm__range = (90, 120))
+    movie_group3 = Movie.objects.filter(showTm__range = (121, 150))
+    movie_group4 = Movie.objects.filter(showTm__gt = 150)
+    movie_group = [0, movie_group1, movie_group2, movie_group3, movie_group4]
+    ordering = [1, 4, 2, 3]
+    for i in ordering:
+        random_num = random.randrange(0, len(movie_group[i]))
+        research_movies.append(movie_group[i][random_num].pk)
+
+    queryset = Movie.objects.filter(pk__in=research_movies)
+    serializer = MovieSerializer(queryset, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def recommend(request):

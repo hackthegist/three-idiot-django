@@ -96,17 +96,18 @@ def research(request):
 
 @api_view(['POST'])
 def recommend(request):
-    num = 1
-    for i in request.data:
-        if num <= 12:
+    pass
+#     num = 1
+#     for i in request.data:
+#         if num <= 12:
             
-        elif num <= 16:
+#         elif num <= 16:
         
-        elif num <= 20:
+#         elif num <= 20:
 
-        else:
+#         else:
         
-        num += 1
+#         num += 1
         
 
 # @api_view(['POST'])
